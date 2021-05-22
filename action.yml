@@ -8,12 +8,12 @@ inputs:
   export:
     description: Set to 'true' to add SQLPackage directory to PATH.
     required: false
-    default: 'false'
+    default: 'true'
 outputs:
   path:
     description: "Path to directory containing sqlpackage executable"
     value: ${{ steps.setup.outputs.path }}
-  path:
+  executable:
     description: "Full path to sqlpackage executable"
     value: ${{ steps.setup.outputs.executable }}
   version:
