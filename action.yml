@@ -1,14 +1,14 @@
 name: 'Set up sqlpackage tool for .NET Core'
 description: 'Sets up sqlpackage commandline tool for .NET Core build chain on Linux'
 inputs:
-  directory:
-    description: 'Directory to which package will be added'
-    required: false
-    default: '../bin'
   version:
     description: 'SQLPackage tool version'
     required: false
     default: '20.x'
+  export:
+    description: Set to 'true' to add SQLPackage directory to PATH
+    required: false
+    default: 'false'
 outputs:
   path:
     description: "Path to directory containing sqlpackage executable"
@@ -22,5 +22,5 @@ runs:
   - run: ${{ github.action_path }}/install_dependencies.sh '${{ inputs.version }}'
     shell: bash
   - id: setup
-    run: ${{ github.action_path }}/setup_sqlpackage.sh '${{ inputs.version }}' '${{ inputs.directory }}'
+    run: ${{ github.action_path }}/setup_sqlpackage.sh '${{ inputs.export }}'
     shell: bash

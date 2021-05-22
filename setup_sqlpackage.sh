@@ -32,6 +32,10 @@ chmod +x "${unpackdir}/sqlpackage"
 "${unpackdir}/sqlpackage" /version || (echo "Error: failed to check sqlpackage version" && cleanup && exit 1)
 
 echo "SQLPackage successfully installed, exporting PATH"
-export PATH="${PATH}:${unpackdir}"
+if [[ "$1" == "true" ]] ; then
+  export PATH="${PATH}:${unpackdir}"
+  echo "export PATH=\"\$PATH:${unpackdir}\"" >> ~/.bashrc
+  echo "PATH export added to ~/.bashrc"
+fi
 echo "::set-output name=path::${unpackdir}"
 echo "::set-output name=version::$("${unpackdir}/sqlpackage" /version)"

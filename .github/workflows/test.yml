@@ -20,6 +20,9 @@ jobs:
           - 17.x
           - 18.x
           - 20.x
+        export:
+          - 'true'
+          - 'false'
 
     steps:
       - uses: actions/setup-dotnet@v1
@@ -30,8 +33,10 @@ jobs:
         run: ./install_dependencies.sh ${{ matrix.sql-version }}
       - name: Setup sqlpackage
         id: setup
-        run: ./setup_sqlpackage.sh
+        # Runs setup with exported
+        run: ./setup_sqlpackage.sh ${{ matrix.export }}
       - name: Test PATH
+        if: ${{ matrix.export }} == 'true'
         run: |
           [[ "$(sqlpackage /version)" == "${{ steps.setup.outputs.version }}" ]] || ( echo "Version output not properly set" && exit 1 )
       - name: Test output
