@@ -13,6 +13,9 @@ outputs:
   path:
     description: "Path to directory containing sqlpackage executable"
     value: ${{ steps.setup.outputs.path }}
+  path:
+    description: "Full path to sqlpackage executable"
+    value: ${{ steps.setup.outputs.executable }}
   version:
     description: "SQLPackage tool version"
     value: ${{ steps.setup.outputs.version }}

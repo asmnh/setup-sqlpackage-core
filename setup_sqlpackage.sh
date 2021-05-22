@@ -38,4 +38,5 @@ if [[ "$1" == "true" ]] ; then
   echo "PATH export added to ~/.bashrc"
 fi
 echo "::set-output name=path::${unpackdir}"
+echo "::set-output name=executable::${unpackdir}/sqlpackage"
 echo "::set-output name=version::$("${unpackdir}/sqlpackage" /version)"

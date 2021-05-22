@@ -35,11 +35,14 @@ jobs:
         id: setup
         # Runs setup with exported
         run: ./setup_sqlpackage.sh ${{ matrix.export }}
+      - name: Test output path
+        run: |
+          [[ "$("${{ steps.setup.outputs.path }}/sqlpackage" /version)" == "${{ steps.setup.outputs.version }}" ]] || ( echo "Version output not properly set" && exit 1 )
+      - name: Test output executable
+        run: |
+          [[ "$("${{ steps.setup.outputs.executable }}" /version)" == "${{ steps.setup.outputs.version }}" ]] || ( echo "Version output not properly set" && exit 1 )
       - name: Test PATH
         if: matrix.export == 'true'
         run: |
           [[ "$(sqlpackage /version)" == "${{ steps.setup.outputs.version }}" ]] || ( echo "Version output not properly set" && exit 1 )
-      - name: Test output
-        run: |
-          [[ "$("${{ steps.setup.outputs.path }}sqlpackage" /version)" == "${{ steps.setup.outputs.version }}" ]] || ( echo "Version output not properly set" && exit 1 )
 
