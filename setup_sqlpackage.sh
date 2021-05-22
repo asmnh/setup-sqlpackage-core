@@ -34,7 +34,7 @@ chmod +x "${unpackdir}/sqlpackage"
 echo "SQLPackage successfully installed, exporting PATH"
 if [[ "$1" == "true" ]] ; then
   export PATH="${PATH}:${unpackdir}"
-  echo "::set-env name=PATH::${PATH}:${unpackdir}"
+  echo "${unpackdir}" >> $GITHUB_PATH
 fi
 echo "::set-output name=path::${unpackdir}"
 echo "::set-output name=executable::${unpackdir}/sqlpackage"
