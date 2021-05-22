@@ -33,8 +33,8 @@ jobs:
         run: ./setup_sqlpackage.sh
       - name: Test PATH
         run: |
-          [[ "$(sqlpackage /version)" -ne "${{ steps.setup.outputs.version }}" ]] && ( echo "Version output not properly set" && exit 1 )
+          [[ "$(sqlpackage /version)" == "${{ steps.setup.outputs.version }}" ]] || ( echo "Version output not properly set" && exit 1 )
       - name: Test output
         run: |
-          [[ "$("${{ steps.setup.outputs.path }}sqlpackage" /version)" -ne "${{ steps.setup.outputs.version }}" ]] && ( echo "Version output not properly set" && exit 1 )
+          [[ "$("${{ steps.setup.outputs.path }}sqlpackage" /version)" == "${{ steps.setup.outputs.version }}" ]] || ( echo "Version output not properly set" && exit 1 )
 
