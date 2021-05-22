@@ -1,0 +1,40 @@
+name: Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  release:
+    types: [published, created]
+
+jobs:
+  test_execution:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        sql-version:
+          - 14.x
+          - 16.x
+          - 17.x
+          - 18.x
+          - 20.x
+
+    steps:
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '5.0.x'
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: ./install_dependencies.sh ${{ matrix.sql-version }}
+      - name: Setup sqlpackage
+        id: setup
+        run: ./setup_sqlpackage.sh
+      - name: Test PATH
+        run: |
+          [[ "$(sqlpackage /version)" -ne "${{ steps.setup.outputs.version }}" ]] && ( echo "Version output not properly set" && exit 1 )
+      - name: Test output
+        run: |
+          [[ "$("${{ steps.setup.outputs.path }}sqlpackage" /version)" -ne "${{ steps.setup.outputs.version }}" ]] && ( echo "Version output not properly set" && exit 1 )
+
