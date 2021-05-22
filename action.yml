@@ -6,7 +6,7 @@ inputs:
     required: false
     default: '20.x'
   export:
-    description: Set to 'true' to add SQLPackage directory to PATH
+    description: Set to 'true' to add SQLPackage directory to PATH.
     required: false
     default: 'false'
 outputs:

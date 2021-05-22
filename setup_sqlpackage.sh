@@ -34,8 +34,7 @@ chmod +x "${unpackdir}/sqlpackage"
 echo "SQLPackage successfully installed, exporting PATH"
 if [[ "$1" == "true" ]] ; then
   export PATH="${PATH}:${unpackdir}"
-  echo "export PATH=\"\$PATH:${unpackdir}\"" >> ~/.bashrc
-  echo "PATH export added to ~/.bashrc"
+  echo "::set-env name=PATH::${PATH}:${unpackdir}"
 fi
 echo "::set-output name=path::${unpackdir}"
 echo "::set-output name=executable::${unpackdir}/sqlpackage"
